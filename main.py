@@ -7,7 +7,7 @@ app = FastAPI()
 
 # OCR configuration
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe"
-config = ('-l jpn --oem 1 --psm 3')
+config = ('-l script/Japanese_vert --oem 1 --psm 3')
 
 @app.post("/image/")
 async def image_upload(file: UploadFile):
@@ -33,11 +33,11 @@ async def image_upload(file: UploadFile):
     height = image.height
     for b in boxes.splitlines():
         b = b.split()
-        draw.rectangle(((int(b[1]), height - int(b[2])), (int(b[3]), height - int(b[4]))), fill='red')
+        draw.rectangle(((int(b[1]), height - int(b[2])), (int(b[3]), height - int(b[4]))), fill='black')
     # Draw the new text on the image
     text_x = 10
     text_y = height - 10 - text_height
-    draw.text((text_x, text_y), translated_text, font=font, fill=(255, 255, 255))
+    draw.text((text_x, text_y), translated_text, font=font, fill=(255, 0, 0))
 
     # Save the image with the new text
     image.save("new_image.jpg")
